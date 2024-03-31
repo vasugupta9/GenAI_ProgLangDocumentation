@@ -7,7 +7,7 @@ def convert_documentation(input_markdown, openai_api_key, source_language, targe
     client = OpenAI(api_key=openai_api_key)
 
     # Define conversion prompt
-    prompt = f"Translate the following {source_language.capitalize()} documentation in markdown format to {target_language.capitalize()}. Make sure the translated documentation is also in similar markdown format :\n\n{input_markdown}\n\nConverted {target_language.capitalize()} documentation:"
+    prompt = f"Translate the following {source_language.capitalize()} documentation to {target_language.capitalize()} :\n\n{input_markdown}\n\nConverted {target_language.capitalize()} documentation:"
     print("Prompt:")
     print(prompt)
     print("="*100)
