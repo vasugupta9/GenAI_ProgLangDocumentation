@@ -2,12 +2,12 @@ from openai import OpenAI
 from dotenv import load_dotenv, find_dotenv
 import os
 
-def convert_documentation(input_markdown, openai_api_key, source_language, target_language):
+def convert_documentation(input_contents, openai_api_key, source_language, target_language):
     # set client
     client = OpenAI(api_key=openai_api_key)
 
     # Define conversion prompt
-    prompt = f"Translate the following {source_language.capitalize()} documentation to {target_language.capitalize()} :\n\n{input_markdown}\n\nConverted {target_language.capitalize()} documentation:"
+    prompt = f"Translate the following {source_language.capitalize()} documentation in markdown format to {target_language.capitalize()}. Converted documentation should also be in markdown format :\n\n{input_contents}\n\nConverted {target_language.capitalize()} documentation:"
     print("Prompt:")
     print(prompt)
     print("="*100)
@@ -42,20 +42,20 @@ if (len(openai_api_key.strip()) == 0) :
 
 # Specify different params below
 source_language  = "python"
-target_language  = "kotlin"
+target_language  = "java"
 input_file_path  = "./samples/python_to_others/input_python_doc.md"
-output_file_path = "./samples/python_to_others/output_kotlin_doc.md" # new file will be created or existing file will be overwritten
+output_file_path = "./samples/python_to_others/output_{}_doc.md".format(target_language) # new file will be created or existing file will be overwritten
 
-# Read input markdown file
+# Read input file
 with open(input_file_path, "r", encoding="utf-8") as file:
-    input_markdown = file.read()
+    input_contents = file.read()
 
 # convert documentation
-converted_documentation = convert_documentation(input_markdown, openai_api_key, source_language, target_language)    
+converted_documentation = convert_documentation(input_contents, openai_api_key, source_language, target_language)    
 print("Completion result")
 print(converted_documentation)
 
-# Write output to markdown file
+# Write output to file
 with open(output_file_path, "w", encoding="utf-8") as file:
     file.write(converted_documentation)
 print(f"Conversion complete. Output saved to {output_file_path}.")
